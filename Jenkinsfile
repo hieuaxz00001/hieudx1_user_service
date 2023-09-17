@@ -59,7 +59,7 @@ pipeline {
                 echo 'Start Deploy Service'
                 kubeconfig(credentialsId: 'myminikube', serverUrl:'', caCertificate:'') {
                     sh 'kubectl get pods'
-                    // sh "helm uninstall ${NAME}"
+                    sh "helm uninstall ${NAME}"
                     sh "helm install -n default ${NAME} deployment/${NAME}/"
                 }
             }
