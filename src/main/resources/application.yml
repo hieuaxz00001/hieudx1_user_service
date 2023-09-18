@@ -24,7 +24,7 @@ eureka:
 app:
   config:
     keycloak:
-      url: http://${HOST_KEYCLOAK}:8080/auth
+      server-url: http://${HOST_KEYCLOAK}:8080/auth
       realm: hieudx-internet-banking
       clientId: internet-banking-api-client
       client-secret: ad300dbb-b742-45f1-909e-4b7a04d306b4
