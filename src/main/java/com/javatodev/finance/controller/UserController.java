@@ -11,6 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/api/v1/bank-user")
@@ -33,9 +36,16 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity readUsers(Pageable pageable) {
+    public ResponseEntity readUsers() throws InterruptedException, ExecutionException {
         log.info("Reading all users from API");
-        return ResponseEntity.ok(userService.readUsers(pageable));
+        var com = CompletableFuture.supplyAsync(() -> {
+            try {
+                return userService.readUsers();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return ResponseEntity.ok(com.get());
     }
 
     @GetMapping(value = "/{id}")

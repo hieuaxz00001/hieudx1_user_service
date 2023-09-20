@@ -1,0 +1,35 @@
+
+spring:
+  application:
+    name: internet-banking-user-service
+  datasource:
+    url: jdbc:mysql://192.168.49.2:30001/core_bank?allowPublicKeyRetrieval=true&useSSL=false
+    username: hieudx1
+    password: 123456789
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: false
+    register-with-eureka: false
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+
+app:
+  config:
+    keycloak:
+      server-url: http://192.168.49.2:30015/auth
+      realm: hieudx-internet-banking
+      clientId: internet-banking-api-client
+      client-secret: ad300dbb-b742-45f1-909e-4b7a04d306b4
+  feign:
+    client:
+      core-banking: core-banking-service
+server:
+  port: 8082

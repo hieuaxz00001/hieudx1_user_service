@@ -75,15 +75,16 @@ public class UserService {
 
     }
 
-    public List<User> readUsers(Pageable pageable) {
-        Page<UserEntity> allUsersInDb = userRepository.findAll(pageable);
-        List<User> users = userMapper.convertToDtoList(allUsersInDb.getContent());
-        users.forEach(user -> {
-            UserRepresentation userRepresentation = keycloakUserService.readUser(user.getAuthId());
-            user.setId(user.getId());
-            user.setEmail(userRepresentation.getEmail());
-            user.setIdentification(user.getIdentification());
-        });
+    public List<User> readUsers() throws InterruptedException {
+        List<UserEntity> allUsersInDb = userRepository.findAll();
+        List<User> users = userMapper.convertToDtoList(allUsersInDb);
+        Thread.sleep(5000);
+//        users.forEach(user -> {
+//            UserRepresentation userReprese5000ntation = keycloakUserService.readUser(user.getAuthId());
+//            user.setId(user.getId());
+//            user.setEmail(userRepresentation.getEmail());
+//            user.setIdentification(user.getIdentification());
+//        });
         return users;
     }
 
