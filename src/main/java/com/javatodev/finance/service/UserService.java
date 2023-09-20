@@ -15,6 +15,7 @@ import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -75,10 +76,10 @@ public class UserService {
 
     }
 
+    @Async
     public List<User> readUsers() throws InterruptedException {
         List<UserEntity> allUsersInDb = userRepository.findAll();
         List<User> users = userMapper.convertToDtoList(allUsersInDb);
-        Thread.sleep(5000);
 //        users.forEach(user -> {
 //            UserRepresentation userReprese5000ntation = keycloakUserService.readUser(user.getAuthId());
 //            user.setId(user.getId());
